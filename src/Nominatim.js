@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import PostalCodeForm from './components/PostalCodeForm';
-import AddressDetails from './components/AddressDetails';
 import PlaceDetails from './components/PlaceDetails';
 import FormattedCoordinates from './components/FormattedCoordinates';
+import './index.css';
+
+const componentStyle = {
+
+  width: '100%',
+  height: '100vh',
+  position: 'fixed',
+  
+};
 
 function Nominatim() {
   const [postalCode, setPostalCode] = useState('');
-  const [address, setAddress] = useState(null);
   const [placeId, setPlaceId] = useState(null);
   const [placeDetails, setPlaceDetails] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = () => {
     fetch(
@@ -16,30 +24,39 @@ function Nominatim() {
     )
       .then((response) => response.json())
       .then((data) => {
-        setAddress(data[0]);
         setPlaceId(data[0].place_id);
+        setError();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setError(error);
+        setPlaceId();
+      })
+  };
+
+  const inputStyle = {
+    height: '10vh',
+    fontsize: '10px'
   };
 
   return (
-    <div className="Nominatim">
-      <PostalCodeForm
-        postalCode={postalCode}
-        setPostalCode={setPostalCode}
-        onSubmit={handleSubmit}
-      />
-      <AddressDetails address={address} />
+    <div className="Nominatim" style={componentStyle}>
+      <div style={inputStyle}>
+        <PostalCodeForm
+          postalCode={postalCode}
+          setPostalCode={setPostalCode}
+          onSubmit={handleSubmit}
+        />
+        <section>
+          {error && <div>Nie znaleziono</div>}
+          {placeId && <div>Sukces!</div>}
+        </section>
+
+      </div>
+
       <PlaceDetails placeId={placeId} setPlaceDetails={setPlaceDetails} />
       {placeDetails && (
         <div>
-          {/* <h1>Place Details:</h1>
-          <p>{JSON.stringify(placeDetails)}</p> */}
-          <h1>Place Details:</h1>
-          <p>{JSON.stringify(placeDetails)}</p>
           <FormattedCoordinates response={placeDetails} />
-
-
         </div>
       )}
     </div>
