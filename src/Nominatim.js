@@ -5,11 +5,9 @@ import FormattedCoordinates from './components/FormattedCoordinates';
 import './index.css';
 
 const componentStyle = {
-
   width: '100%',
   height: '100vh',
   position: 'fixed',
-  
 };
 
 function Nominatim() {
