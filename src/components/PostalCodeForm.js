@@ -9,14 +9,14 @@ function PostalCodeForm({ postalCode, setPostalCode, onSubmit }) {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Podaj kod pocztowy: 
+        Zip code: 
         <input
           type="text"
           value={postalCode}
           onChange={(e) => setPostalCode(e.target.value)}
         />
       </label>
-      <input type="submit" value="Znajdź" />
+      <input type="submit" value="Submit" />
     </form>
   );
 }

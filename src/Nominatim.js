@@ -47,8 +47,8 @@ function Nominatim() {
           onSubmit={handleSubmit}
         />
         <section>
-          {error && <div>Nie znaleziono</div>}
-          {placeId && <div>Sukces!</div>}
+          {error && <div>Not found</div>}
+          {placeId && <div>Success!</div>}
         </section>
 
       </div>
